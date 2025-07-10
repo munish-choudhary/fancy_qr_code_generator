@@ -1,22 +1,150 @@
 import { NextResponse } from "next/server"
 
+const staticTokenData = {
+  status: true,
+  data: [
+    {
+      id: 1,
+      coin_all_code: "Bitcoin",
+      coin_code: "BTC",
+      main_network: "BTC",
+      no_support_coin: "MDS,SKM,DX,BUY,BTRST,RARI,MUSE,DIS(BSC),BSMV,BTC",
+      is_support_advanced: "Y",
+      is_support_memo: "N",
+      coin_code_show: "BTC(BTC)",
+      coin_data: {
+        id: 1,
+        coin_name: "Bitcoin",
+        coin_symbol: "btc",
+        network: "BITCOIN",
+        coin_image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png",
+        is_token: 0,
+        token_address: null,
+        token_type: null,
+        decimal_value: 8,
+        large_decimal_value: "100000000",
+      },
+    },
+    {
+      id: 2,
+      coin_all_code: "Ethereum",
+      coin_code: "ETH",
+      main_network: "ETH",
+      no_support_coin: "MDS,SKM,DX,BUY,BTRST,RARI,MUSE,DIS(BSC),BSMV",
+      is_support_advanced: "Y",
+      is_support_memo: "N",
+      coin_code_show: "ETH(ERC20)",
+      coin_data: {
+        id: 2,
+        coin_name: "Ethereum",
+        coin_symbol: "eth",
+        network: "ETHEREUM",
+        coin_image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
+        is_token: 0,
+        token_address: null,
+        token_type: null,
+        decimal_value: 18,
+        large_decimal_value: "1000000000000000000",
+      },
+    },
+    {
+      id: 3,
+      coin_all_code: "BNB(BSC)",
+      coin_code: "BNB(BSC)",
+      main_network: "BSC",
+      no_support_coin: "MDS,SKM,GLM,DX,BUY,BTRST,RARI,MUSE,DIS(BSC),BSMV,BNB(BSC)",
+      is_support_advanced: "Y",
+      is_support_memo: "N",
+      coin_code_show: "BNB(BSC)",
+      coin_data: {
+        id: 3,
+        coin_name: "BNB Smart Chain",
+        coin_symbol: "bnb",
+        network: "BINANCE_SMART_CHAIN",
+        coin_image: "https://s3.coinmarketcap.com/static-gravity/image/3d7e590619f0473192c650300c91e247.png",
+        is_token: 0,
+        token_address: null,
+        token_type: null,
+        decimal_value: 18,
+        large_decimal_value: "1000000000000000000",
+      },
+    },
+    {
+      id: 4,
+      coin_all_code: "POL(POL)",
+      coin_code: "POL(POL)",
+      main_network: "POLYGON",
+      no_support_coin: "POL(POL)",
+      is_support_advanced: "Y",
+      is_support_memo: "N",
+      coin_code_show: "POL(POL)",
+      coin_data: {
+        id: 4,
+        coin_name: "Polygon",
+        coin_symbol: "pol",
+        network: "POLYGON",
+        coin_image: "https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png",
+        is_token: 0,
+        token_address: null,
+        token_type: null,
+        decimal_value: 18,
+        large_decimal_value: "1000000000000000000",
+      },
+    },
+    {
+      id: 5,
+      coin_all_code: "Avalanche",
+      coin_code: "AVAX(C-Chain)",
+      main_network: "AVAXC",
+      no_support_coin: "MDS,XMR,SKM,GLM,DX,BUY,BTRST,RARI,MUSE,DIS(BSC),BSMV,AVAX(C-Chain)",
+      is_support_advanced: "Y",
+      is_support_memo: "N",
+      coin_code_show: "AVAX(C-Chain)",
+      coin_data: {
+        id: 5,
+        coin_name: "Avalanche",
+        coin_symbol: "avax",
+        network: "AVAX_C_CHAIN",
+        coin_image: "https://s2.coinmarketcap.com/static/img/coins/64x64/5805.png",
+        is_token: 0,
+        token_address: null,
+        token_type: null,
+        decimal_value: 18,
+        large_decimal_value: "1000000000000000000",
+      },
+    },
+    {
+      id: 6,
+      coin_all_code: "Crypto.com Coin",
+      coin_code: "CRO",
+      main_network: "CRONOS",
+      no_support_coin: "MDS,XMR,SKM,GLM,DX,BUY,BTRST,RARI,MUSE,DIS(BSC),BSMV,CRO",
+      is_support_advanced: "Y",
+      is_support_memo: "N",
+      coin_code_show: "CRO(CRONOS)",
+      coin_data: {
+        id: 6,
+        coin_name: "Cronos",
+        coin_symbol: "cro",
+        network: "CRONOS",
+        coin_image: "https://s3.coinmarketcap.com/static-gravity/image/84e1ec1257dd4a6da6ee5584338a2460.jpeg",
+        is_token: 0,
+        token_address: null,
+        token_type: null,
+        decimal_value: 18,
+        large_decimal_value: "1000000000000000000",
+      },
+    },
+  ],
+  message: "Data fetch successfully.",
+}
+
 export async function GET() {
   try {
-    const response = await fetch("https://www.swftc.info/api/v1/queryCoinList", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: "aliyungf_tc=3ee589a9582b65e2744e1c3ad0081cca657535dc95639aaf57cf4ed7bea91b4b",
-      },
-      body: JSON.stringify({ supportType: "advanced" }),
-    })
+    // Simulate a small delay to mimic API call
+    await new Promise((resolve) => setTimeout(resolve, 100))
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch tokens")
-    }
-
-    const data = await response.json()
-    return NextResponse.json(data)
+    return NextResponse.json(staticTokenData)
   } catch (error) {
     console.error("Error fetching tokens:", error)
     return NextResponse.json({ error: "Failed to fetch tokens" }, { status: 500 })
